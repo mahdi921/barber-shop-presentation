@@ -72,18 +72,212 @@ const videoSource = {
 };
 ```
 
-### اتصال به API نانوبانانا
+### اتصال به API نانوبانانا و مدیریت API Key
 
-فایل `src/components/LiveTest.jsx` را باز کنید و endpoint واقعی را جایگزین کنید:
+#### ⚠️ هشدار امنیتی مهم
 
-```javascript
-// خط ~108
-const API_ENDPOINT = 'https://api.example.com/nanobanana/process';
+**هرگز API key را مستقیماً در کد frontend قرار ندهید!**
+
+API key شما اگر در کد React قرار بگیرد:
+- ✗ در bundle نهایی قابل مشاهده است
+- ✗ هر کسی می‌تواند آن را ببیند و سوء‌استفاده کند
+- ✗ محافظتی در برابر استفاده غیرمجاز ندارد
+
+#### روش توصیه شده: Backend Proxy (امن) 🔒
+
+بهترین روش این است که یک **backend سرور** داشته باشید که:
+1. API key را در محیط server نگه‌دارد
+2. درخواست‌های frontend را دریافت کند
+3. با API key به سرویس NanoBanana درخواست بزند
+4. نتیجه را به frontend برگرداند
+
+##### مثال با Node.js + Express
+
+**گام ۱: ایجاد backend ساده**
+
+```bash
+# در یک دایرکتوری جدا
+mkdir backend
+cd backend
+npm init -y
+npm install express cors dotenv multer axios
 ```
 
-**⚠️ هشدار امنیتی**: هرگز API key را مستقیماً در کد frontend قرار ندهید!
+**گام ۲: ایجاد فایل `.env`** (این فایل را به Git اضافه نکنید!)
 
-برای production، از یک **backend proxy** استفاده کنید. مثال Nginx در فایل `nginx.conf` موجود است.
+```env
+# backend/.env
+NANOBANANA_API_KEY=your_actual_api_key_here
+NANOBANANA_API_URL=https://api.nanobanana.example.com
+PORT=8000
+```
+
+**گام ۳: ایجاد سرور** (`backend/server.js`)
+
+```javascript
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const axios = require('axios');
+require('dotenv').config();
+
+const app = express();
+const upload = multer();
+
+app.use(cors());
+app.use(express.json());
+
+// Endpoint برای پردازش تصویر
+app.post('/api/nanobanana/process', upload.single('image'), async (req, res) => {
+  try {
+    const { preset, instructions, client_timestamp, source } = req.body;
+    const imageFile = req.file;
+
+    if (!imageFile) {
+      return res.status(400).json({ 
+        status: 'error', 
+        message: 'تصویر یافت نشد' 
+      });
+    }
+
+    // ارسال به NanoBanana با API Key
+    const formData = new FormData();
+    formData.append('image', imageFile.buffer, imageFile.originalname);
+    formData.append('preset', preset);
+    formData.append('instructions', instructions);
+
+    const response = await axios.post(
+      `${process.env.NANOBANANA_API_URL}/process`,
+      formData,
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.NANOBANANA_API_KEY}`,
+          ...formData.getHeaders()
+        }
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('NanoBanana API Error:', error.message);
+    res.status(500).json({ 
+      status: 'error', 
+      message: 'خطا در پردازش تصویر' 
+    });
+  }
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Backend running on port ${process.env.PORT}`);
+});
+```
+
+**گام ۴: اجرای backend**
+
+```bash
+node server.js
+```
+
+**گام ۵: تنظیم frontend**
+
+فایل `src/components/LiveTest.jsx` را باز کنید و endpoint را تغییر دهید:
+
+```javascript
+// خط ~131
+const API_ENDPOINT = 'http://localhost:8000/api/nanobanana/process';
+// یا برای production:
+// const API_ENDPOINT = '/api/nanobanana/process'; (با Nginx proxy)
+```
+
+**گام ۶: برای Production، از Nginx استفاده کنید**
+
+فایل `nginx.conf` این پروژه قبلاً شامل پیکربندی proxy است. فقط کافی است backend address را تنظیم کنید:
+
+```nginx
+location /api/ {
+    proxy_pass http://localhost:8000/;  # ← آدرس backend شما
+}
+```
+
+---
+
+#### روش جایگزین: متغیرهای محیطی Vite (کمتر امن) ⚠️
+
+اگر API شما محدودیت‌های domain دارد یا rate limiting سخت‌گیری دارد، می‌توانید از environment variables استفاده کنید، **اما همچنان توصیه نمی‌شود**.
+
+**گام ۱: ایجاد فایل `.env`** (در ریشه پروژه frontend)
+
+```env
+# .env (این فایل را به Git اضافه نکنید!)
+VITE_NANOBANANA_API_KEY=your_api_key_here
+VITE_NANOBANANA_API_URL=https://api.nanobanana.example.com
+```
+
+**گام ۲: اضافه کردن `.env` به `.gitignore`**
+
+```bash
+echo ".env" >> .gitignore
+```
+
+**گام ۳: استفاده در کد**
+
+فایل `src/components/LiveTest.jsx` را ویرایش کنید:
+
+```javascript
+// خط ~131
+const API_ENDPOINT = import.meta.env.VITE_NANOBANANA_API_URL + '/process';
+const API_KEY = import.meta.env.VITE_NANOBANANA_API_KEY;
+
+// هنگام ارسال request:
+const response = await fetch(API_ENDPOINT, {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${API_KEY}`,
+  },
+  body: formData,
+});
+```
+
+**⚠️ نکته**: این روش API key را در bundle وارد می‌کند و قابل مشاهده است. فقط برای تست و توسعه استفاده کنید.
+
+---
+
+#### خلاصه مراحل (روش توصیه شده)
+
+1. ✅ API key را در backend server نگه‌دارید (`.env` فایل)
+2. ✅ یک endpoint در backend بسازید که درخواست‌های frontend را handle کند
+3. ✅ Backend به NanoBanana با API key درخواست بزند
+4. ✅ Frontend فقط به backend خودتان درخواست بزند (بدون API key)
+5. ✅ برای production از Nginx proxy استفاده کنید
+
+#### مثال کامل ساختار پروژه
+
+```
+my-barber-shop-project/
+├── frontend/                    # این پروژه React
+│   ├── src/
+│   ├── package.json
+│   └── .env.example            # نمونه (بدون API key واقعی)
+│
+├── backend/                     # سرور Node.js شما
+│   ├── server.js
+│   ├── package.json
+│   └── .env                    # API key اینجا (در .gitignore)
+│
+└── nginx.conf                  # پیکربندی production
+```
+
+#### چک‌لیست امنیت API Key
+
+- [ ] API key در فایل `.env` قرار دارد
+- [ ] فایل `.env` در `.gitignore` اضافه شده
+- [ ] API key هرگز در کد frontend hardcode نشده
+- [ ] Backend endpoint برای proxy ایجاد شده
+- [ ] CORS به درستی تنظیم شده
+- [ ] Rate limiting در backend فعال است
+- [ ] برای production از HTTPS استفاده می‌شود
+
+
 
 ### Schema درخواست API
 
