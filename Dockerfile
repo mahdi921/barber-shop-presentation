@@ -20,8 +20,8 @@ FROM nginx:alpine
 
 # Copy nginx configs (use nginx-ssl.conf for production with SSL)
 # For SSL: uncomment the next line and comment out the regular nginx.conf
-# COPY nginx-ssl.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx-ssl.conf /etc/nginx/conf.d/default.conf
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built assets from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
