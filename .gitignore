@@ -23,7 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .env# Deployment Files
-deploy.sh
 *.log
 
 # GitHub Actions cache
