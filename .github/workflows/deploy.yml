@@ -25,6 +25,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd ${{ secrets.VPS_PROJECT_PATH }}
+            chmod +x deploy.sh
             ./deploy.sh
 
       - name: Deployment Status
