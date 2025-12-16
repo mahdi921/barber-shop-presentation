@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Frontend service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: barber-shop-frontend
+    ports:
+      - "80:80"
+    environment:
+      # These will be injected at build time
+      - VITE_NANOBANANA_API_URL=${VITE_NANOBANANA_API_URL}
+    restart: unless-stopped
+    networks:
+      - barber-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Backend service (optional - uncomment if you use the Node.js backend)
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: barber-shop-backend
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - PORT=8000
+  #     - NANOBANANA_API_KEY=${NANOBANANA_API_KEY}
+  #     - NANOBANANA_API_URL=${NANOBANANA_API_URL}
+  #     - FRONTEND_URL=${FRONTEND_URL:-http://localhost}
+  #   env_file:
+  #     - .env
+  #   restart: unless-stopped
+  #   networks:
+  #     - barber-network
+  #   healthcheck:
+  #     test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/api/health"]
+  #     interval: 30s
+  #     timeout: 3s
+  #     retries: 3
+
+networks:
+  barber-network:
+    driver: bridge

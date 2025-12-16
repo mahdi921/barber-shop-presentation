@@ -14,6 +14,31 @@
 
 ## نصب و اجرا
 
+### روش ۱: اجرای سریع با Docker 🐳 (توصیه می‌شود)
+
+**گام ۱**: کپی environment variables
+```bash
+cp .env.docker.example .env
+nano .env  # تنظیم VITE_NANOBANANA_API_URL
+```
+
+**گام ۲**: اجرا
+```bash
+docker-compose up -d
+```
+
+**گام ۳**: باز کردن در مرورگر
+```
+http://localhost
+```
+
+📖 [راهنمای کامل Docker](./DOCKER-QUICKSTART.md)
+
+---
+
+### روش ۲: اجرای Local (Development)
+
+
 ### پیش‌نیازها
 
 - Node.js (نسخه ۱۶ یا بالاتر)
@@ -345,7 +370,264 @@ import emailjs from '@emailjs/browser';
 emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData);
 ```
 
-## استقرار با Nginx
+## استقرار با Docker 🐳
+
+این پروژه شامل پیکربندی کامل Docker است که استقرار را بسیار ساده می‌کند.
+
+### پیش‌نیازها
+
+- Docker Engine (نسخه 20.10 یا بالاتر)
+- Docker Compose (نسخه 2.0 یا بالاتر)
+
+### مراحل استقرار
+
+#### گام ۱: کپی فایل environment variables
+
+```bash
+# کپی فایل نمونه
+cp .env.docker.example .env
+
+# ویرایش فایل .env و مقادیر واقعی را وارد کنید
+nano .env
+```
+
+#### گام ۲: تنظیم متغیرهای محیطی
+
+فایل `.env` را ویرایش کنید:
+
+```env
+# برای فقط frontend (بدون backend)
+VITE_NANOBANANA_API_URL=https://api.nanobanana.example.com
+
+# اگر از backend استفاده می‌کنید:
+VITE_NANOBANANA_API_URL=/api/nanobanana
+NANOBANANA_API_KEY=your_actual_api_key_here
+NANOBANANA_API_URL=https://api.nanobanana.example.com
+FRONTEND_URL=http://localhost
+```
+
+#### گام ۳: اجرای کانتینرها
+
+**فقط Frontend**:
+```bash
+docker-compose up -d frontend
+```
+
+**Frontend + Backend**:
+
+ابتدا بخش backend را در `docker-compose.yml` uncomment کنید، سپس:
+
+```bash
+docker-compose up -d
+```
+
+#### گام ۴: بررسی وضعیت
+
+```bash
+# نمایش کانتینرهای در حال اجرا
+docker-compose ps
+
+# مشاهده logs
+docker-compose logs -f
+
+# فقط logs frontend
+docker-compose logs -f frontend
+```
+
+وب‌سایت روی `http://localhost` در دسترس است.
+
+### دستورات مفید Docker
+
+```bash
+# توقف کانتینرها
+docker-compose down
+
+# توقف و حذف volumes
+docker-compose down -v
+
+# rebuild کردن images
+docker-compose build
+
+# rebuild و اجرا
+docker-compose up -d --build
+
+# مشاهده resource usage
+docker stats
+
+# وارد شدن به کانتینر frontend
+docker exec -it barber-shop-frontend sh
+
+# پاکسازی کامل
+docker-compose down
+docker system prune -a
+```
+
+### استقرار در سرور Production
+
+#### گام ۱: انتقال فایل‌ها به سرور
+
+```bash
+# ایجاد آرشیو
+tar -czf barber-shop.tar.gz \
+  --exclude=node_modules \
+  --exclude=dist \
+  --exclude=.git \
+  .
+
+# کپی به سرور
+scp barber-shop.tar.gz user@your-server:/opt/barber-shop/
+
+# در سرور
+ssh user@your-server
+cd /opt/barber-shop
+tar -xzf barber-shop.tar.gz
+```
+
+#### گام ۲: تنظیم Environment Variables در سرور
+
+```bash
+# ایجاد فایل .env
+nano .env
+```
+
+مقادیر production را وارد کنید:
+
+```env
+VITE_NANOBANANA_API_URL=/api/nanobanana
+NANOBANANA_API_KEY=your_production_api_key
+NANOBANANA_API_URL=https://api.nanobanana.example.com
+FRONTEND_URL=https://yourdomain.com
+```
+
+#### گام ۳: اجرا با Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+#### گام ۴: تنظیم Reverse Proxy (Nginx خارجی)
+
+اگر Nginx خارجی دارید (برای SSL و چند سایت):
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:80;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+#### گام ۵: تنظیم SSL با Let's Encrypt
+
+```bash
+sudo certbot --nginx -d yourdomain.com
+```
+
+### استفاده از Backend در Docker
+
+اگر می‌خواهید از backend Node.js استفاده کنید:
+
+**گام ۱: ایجاد دایرکتوری backend**
+
+```bash
+mkdir -p backend
+```
+
+**گام ۲: کپی فایل‌های backend**
+
+```bash
+# کپی backend example
+cp backend-example.js backend/server.js
+cp backend.env.example backend/.env
+
+# ایجاد package.json در backend
+cd backend
+npm init -y
+npm install express cors dotenv multer axios form-data
+```
+
+**گام ۳: کپی Dockerfile**
+
+```bash
+cp Dockerfile.backend backend/Dockerfile
+```
+
+**گام ۴: Uncomment بخش backend در docker-compose.yml**
+
+فایل `docker-compose.yml` را ویرایش کنید و کامنت‌های بخش backend را بردارید.
+
+**گام ۵: اجرا**
+
+```bash
+docker-compose up -d
+```
+
+Backend روی `http://localhost:8000` اجرا می‌شود.
+
+### Monitoring و Logs
+
+```bash
+# مشاهده health status
+docker-compose ps
+
+# مشاهده logs realtime
+docker-compose logs -f
+
+# مشاهده resource usage
+docker stats
+
+# بررسی health checks
+docker inspect barber-shop-frontend | grep Health -A 10
+```
+
+### Backup و Restore
+
+```bash
+# Backup volumes
+docker run --rm \
+  -v barber-shop_data:/data \
+  -v $(pwd):/backup \
+  alpine tar czf /backup/backup.tar.gz /data
+
+# Restore
+docker run --rm \
+  -v barber-shop_data:/data \
+  -v $(pwd):/backup \
+  alpine tar xzf /backup/backup.tar.gz -C /
+```
+
+### عیب‌یابی Docker
+
+**کانتینر start نمی‌شود**:
+```bash
+docker-compose logs frontend
+docker inspect barber-shop-frontend
+```
+
+**مشکل network**:
+```bash
+docker network ls
+docker network inspect barber-shop_barber-network
+```
+
+**پاکسازی و rebuild کامل**:
+```bash
+docker-compose down -v
+docker system prune -a -f
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+---
+
+## استقرار با Nginx (بدون Docker)
 
 فایل پیکربندی Nginx نمونه (`nginx.conf`) در ریشه پروژه موجود است.
 
