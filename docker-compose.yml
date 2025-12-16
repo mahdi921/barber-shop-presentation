@@ -28,7 +28,7 @@ services:
       dockerfile: Dockerfile
     container_name: barber-shop-backend
     ports:
-      - "8000:8000"
+      - "8001:8000"
     environment:
       - PORT=8000
       - NANOBANANA_API_KEY=${NANOBANANA_API_KEY}
