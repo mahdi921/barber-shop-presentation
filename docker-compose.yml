@@ -9,9 +9,13 @@ services:
     container_name: barber-shop-frontend
     ports:
       - "80:80"
+      - "443:443"  # HTTPS port
     environment:
       # These will be injected at build time
       - VITE_NANOBANANA_API_URL=${VITE_NANOBANANA_API_URL}
+    volumes:
+      # Mount SSL certificates (create ssl/ directory and add your certs)
+      - ./ssl:/etc/nginx/ssl:ro
     restart: unless-stopped
     networks:
       - barber-network

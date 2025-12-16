@@ -28,3 +28,7 @@ deploy.sh
 
 # GitHub Actions cache
 .github/workflows/*.log
+ssl/
+*.crt
+*.key
+*.pem
