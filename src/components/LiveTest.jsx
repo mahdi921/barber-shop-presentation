@@ -142,8 +142,8 @@ const LiveTest = () => {
         formData.append('source', mode === 'camera' ? 'camera' : 'upload');
 
         try {
-            // TODO: Replace with actual API endpoint
-            const API_ENDPOINT = 'https://api.example.com/nanobanana/process';
+            // Use environment variable or default to backend endpoint
+            const API_ENDPOINT = import.meta.env.VITE_NANOBANANA_API_URL || '/api/nanobanana/process';
 
             // Simulating API call with mock response
             await new Promise(resolve => setTimeout(resolve, 2000));
