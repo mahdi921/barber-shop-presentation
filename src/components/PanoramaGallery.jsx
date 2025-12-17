@@ -52,6 +52,22 @@ export default function PanoramaGallery() {
         };
     }, [isPaused, images.length]);
 
+    // Keyboard navigation
+    useEffect(() => {
+        const onKey = (e) => {
+            if (e.key === "ArrowRight") {
+                setIsPaused(true);
+                move(1);
+            }
+            if (e.key === "ArrowLeft") {
+                setIsPaused(true);
+                move(-1);
+            }
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [index]);
+
     const scrollToIndex = (i) => {
         const scroller = scrollerRef.current;
         if (!scroller) return;
