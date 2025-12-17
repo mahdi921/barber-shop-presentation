@@ -16,20 +16,30 @@
 .panorama-controls {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  position: relative;
   max-width: 1400px;
   margin: 0 auto;
 }
 
+/* Mobile: Full width images with overlay arrows */
+@media (max-width: 767px) {
+  .panorama-controls {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* Desktop: Normal layout with arrows on sides */
 @media (min-width: 768px) {
   .panorama-controls {
     gap: var(--spacing-lg);
+    flex-direction: row;
   }
 }
 
 .panorama-arrow {
   flex-shrink: 0;
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--border-color);
   padding: var(--spacing-sm);
   font-size: 1.25rem;
@@ -37,18 +47,36 @@
   border-radius: var(--radius-md);
   color: var(--text-primary);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+}
+
+/* Mobile: Position arrows as overlay */
+@media (max-width: 767px) {
+  .panorama-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .panorama-arrow:first-child {
+    right: var(--spacing-md);
+  }
+
+  .panorama-arrow:last-child {
+    left: var(--spacing-md);
+  }
 }
 
 .panorama-arrow:hover:not(:disabled) {
-  background: var(--gray-100);
+  background: rgba(255, 255, 255, 1);
   border-color: var(--gray-300);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .panorama-arrow:disabled {
@@ -68,6 +96,8 @@
     height: 48px;
     padding: var(--spacing-md);
     font-size: 1.75rem;
+    position: static;
+    transform: none;
   }
 }
 
@@ -82,6 +112,26 @@
   scrollbar-width: thin;
   scrollbar-color: var(--gray-300) transparent;
   flex: 1;
+  width: 100%;
+  position: relative;
+}
+
+/* Mobile: Full width, no side padding */
+@media (max-width: 767px) {
+  .panorama-scroller {
+    width: 100vw;
+    margin-left: calc(-1 * var(--spacing-lg));
+    margin-right: calc(-1 * var(--spacing-lg));
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .panorama-scroller {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
 }
 
 .panorama-scroller::-webkit-scrollbar {
