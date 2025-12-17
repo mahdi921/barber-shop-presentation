@@ -12,14 +12,14 @@ import women3 from '../assets/women-3.jpg';
 
 const IMAGES_BY_THEME = {
     default: [
-        { src: panorama1, alt: "مدل مردانه ۱", caption: "مدل ۱ — توضیح کوتاه" },
-        { src: panorama2, alt: "مدل مردانه ۲", caption: "مدل ۲ — توضیح کوتاه" },
-        { src: panorama3, alt: "مدل مردانه ۳", caption: "مدل ۳ — توضیح کوتاه" },
+        { src: panorama1, alt: "", caption: "مدل ۱" },
+        { src: panorama2, alt: "", caption: "مدل ۲" },
+        { src: panorama3, alt: "", caption: "مدل ۳" },
     ],
     women: [
-        { src: women1, alt: "مدل بانوان ۱", caption: "مدل بانوان ۱ — توضیح کوتاه" },
-        { src: women2, alt: "مدل بانوان ۲", caption: "مدل بانوان ۲ — توضیح کوتاه" },
-        { src: women3, alt: "مدل بانوان ۳", caption: "مدل بانوان ۳ — توضیح کوتاه" },
+        { src: women1, alt: "", caption: "مدل مو" },
+        { src: women2, alt: "", caption: "مدل ناخن" },
+        { src: women3, alt: "", caption: "مدل آرایش" },
     ],
 };
 
