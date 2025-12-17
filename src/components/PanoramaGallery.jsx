@@ -21,18 +21,36 @@ export default function PanoramaGallery() {
 
     const scrollerRef = useRef(null);
     const [index, setIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const intervalRef = useRef(null);
 
+    // Auto-scroll functionality
     useEffect(() => {
-        const scroller = scrollerRef.current;
-        if (!scroller) return;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        const onKey = (e) => {
-            if (e.key === "ArrowRight") move(1);
-            if (e.key === "ArrowLeft") move(-1);
+        if (prefersReducedMotion || isPaused) {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+            return;
+        }
+
+        // Auto-advance every 4 seconds
+        intervalRef.current = setInterval(() => {
+            setIndex((prevIndex) => {
+                const nextIndex = (prevIndex + 1) % images.length;
+                scrollToIndex(nextIndex);
+                return nextIndex;
+            });
+        }, 4000);
+
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
         };
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, []);
+    }, [isPaused, images.length]);
 
     const scrollToIndex = (i) => {
         const scroller = scrollerRef.current;
@@ -45,18 +63,26 @@ export default function PanoramaGallery() {
     };
 
     const move = (dir) => {
+        setIsPaused(true); // Pause auto-scroll when user manually navigates
         let next = index + dir;
         if (next < 0) next = 0;
         if (next >= images.length) next = images.length - 1;
         scrollToIndex(next);
     };
 
+    const handleMouseEnter = () => setIsPaused(true);
+    const handleMouseLeave = () => setIsPaused(false);
+
     return (
         <section id="hero" className="panorama-section" aria-label="نمایش مدل‌ها">
             <div className="container">
                 <h2 className="panorama-title">پیش‌نمایش مدل مو و ریش با هوش مصنوعی</h2>
 
-                <div className="panorama-controls">
+                <div
+                    className="panorama-controls"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
                     <button
                         aria-label="تصویر قبلی"
                         onClick={() => move(-1)}
