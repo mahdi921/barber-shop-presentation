@@ -43,7 +43,7 @@ export default function PanoramaGallery() {
     return (
         <section id="hero" className="panorama-section" aria-label="نمونه مدل‌ها">
             <div className="container">
-                <h2 className="panorama-title">نمونه‌های قبل و بعد</h2>
+                <h2 className="panorama-title">قبل از پیرایش، مدل‌ها را به مشتریان خود نمایش دهید</h2>
 
                 <div className="panorama-controls">
                     <button
