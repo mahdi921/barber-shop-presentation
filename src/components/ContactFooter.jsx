@@ -104,7 +104,7 @@ const ContactFooter = () => {
                         <div className="footer__contact-items">
                             <div className="footer__contact-item">
                                 <Mail size={20} />
-                                <span>info@nanobanana.ir</span>
+                                <span>info@stylio.ir</span>
                             </div>
                             <div className="footer__contact-item">
                                 <Phone size={20} />
@@ -239,7 +239,7 @@ const ContactFooter = () => {
                 {/* Footer Bottom */}
                 <div className="footer__bottom">
                     <p className="footer__copyright">
-                        © ۱۴۰۳ نانوبانانا. تمامی حقوق محفوظ است.
+                        © ۱۴۰۳ استایلیو. تمامی حقوق محفوظ است.
                     </p>
                     <div className="footer__links">
                         <a href="#privacy" className="footer__link">حریم خصوصی</a>

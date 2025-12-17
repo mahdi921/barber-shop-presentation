@@ -1,0 +1,125 @@
+/* Women Section Styles */
+.women-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe0eb 100%);
+}
+
+.women-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.women-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--text-primary, #1a202c);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #d53f8c 0%, #ed64a6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.women-intro {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-secondary, #4a5568);
+    margin-bottom: 2.5rem;
+}
+
+.women-categories {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(213, 63, 140, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.category-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(213, 63, 140, 0.2);
+}
+
+.category-icon {
+    color: #d53f8c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-label {
+    font-weight: 600;
+    color: var(--text-primary, #1a202c);
+    font-size: 1rem;
+}
+
+.women-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #d53f8c 0%, #ed64a6 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 1.125rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(213, 63, 140, 0.3);
+}
+
+.women-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(213, 63, 140, 0.4);
+}
+
+.women-cta:focus-visible {
+    outline: 3px solid #f687b3;
+    outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    .category-item,
+    .women-cta {
+        transition: none;
+    }
+
+    .category-item:hover,
+    .women-cta:hover {
+        transform: none;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .women-categories {
+        gap: 1rem;
+    }
+
+    .category-item {
+        min-width: 100px;
+        padding: 1rem;
+    }
+
+    .women-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}

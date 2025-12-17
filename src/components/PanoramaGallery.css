@@ -1,0 +1,198 @@
+/* Panorama Gallery Styles */
+.panorama-section {
+  direction: rtl;
+  padding: 3rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.panorama-title {
+  text-align: center;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-primary, #1a202c);
+  margin-bottom: 2rem;
+}
+
+.panorama-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.panorama-arrow {
+  flex-shrink: 0;
+  background: var(--bg-surface, #fff);
+  border: 2px solid var(--border-color, #e2e8f0);
+  padding: 1rem 1.25rem;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 12px;
+  color: var(--primary, #2b6cb0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.panorama-arrow:hover:not(:disabled) {
+  background: var(--primary, #2b6cb0);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+}
+
+.panorama-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.panorama-arrow:focus-visible {
+  outline: 3px solid var(--primary-light, #63b3ed);
+  outline-offset: 2px;
+}
+
+.panorama-scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  gap: 1.5rem;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary, #2b6cb0) var(--bg-muted, #f7fafc);
+  flex: 1;
+}
+
+.panorama-scroller::-webkit-scrollbar {
+  height: 8px;
+}
+
+.panorama-scroller::-webkit-scrollbar-track {
+  background: var(--bg-muted, #f7fafc);
+  border-radius: 4px;
+}
+
+.panorama-scroller::-webkit-scrollbar-thumb {
+  background: var(--primary, #2b6cb0);
+  border-radius: 4px;
+}
+
+.panorama-scroller::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark, #1e4e8c);
+}
+
+.panorama-item {
+  flex: 0 0 90%;
+  max-width: 90%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface, #fff);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panorama-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.panorama-item:focus-within {
+  outline: 3px solid var(--primary-light, #63b3ed);
+  outline-offset: 2px;
+}
+
+.panorama-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  outline: none;
+  background: var(--bg-muted, #f7fafc);
+}
+
+.panorama-caption {
+  padding: 1.25rem;
+  text-align: right;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-secondary, #4a5568);
+}
+
+.panorama-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn-outline {
+  border: 2px solid var(--primary, #2b6cb0);
+  padding: 0.875rem 2rem;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--primary, #2b6cb0);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-outline:hover {
+  background: var(--primary, #2b6cb0);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+}
+
+.btn-outline:focus-visible {
+  outline: 3px solid var(--primary-light, #63b3ed);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .panorama-scroller,
+  .panorama-item,
+  .panorama-arrow,
+  .btn-outline {
+    transition: none;
+    scroll-behavior: auto;
+  }
+  
+  .panorama-arrow:hover:not(:disabled),
+  .panorama-item:hover,
+  .btn-outline:hover {
+    transform: none;
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .panorama-item {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+  
+ .panorama-img {
+    height: 320px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .panorama-item {
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  
+  .panorama-img {
+    height: 380px;
+  }
+  
+  .panorama-section {
+    padding: 4rem 0;
+  }
+}
