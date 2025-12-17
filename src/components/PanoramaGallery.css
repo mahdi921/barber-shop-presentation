@@ -146,6 +146,8 @@
 @media (min-width: 1024px) {
   .panorama-img {
     height: 500px;
+    object-fit: cover;
+    /* Use cover on desktop for better visual impact */
   }
 
   .panorama-section {
