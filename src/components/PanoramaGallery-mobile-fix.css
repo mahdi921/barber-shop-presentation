@@ -1,0 +1,24 @@
+/* Mobile arrow container */
+@media (max-width: 767px) {
+
+    /* Create a centered arrow navigation below gallery */
+    .panorama-controls::after {
+        content: '';
+        order: 2;
+        width: 100%;
+        height: 0;
+    }
+
+    .panorama-arrow:first-of-type {
+        order: 2;
+    }
+
+    .panorama-arrow:last-of-type {
+        order: 2;
+    }
+
+    /* Center the arrow buttons */
+    .panorama-controls {
+        justify-content: center;
+    }
+}

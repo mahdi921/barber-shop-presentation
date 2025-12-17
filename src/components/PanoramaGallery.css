@@ -19,13 +19,14 @@
   position: relative;
   max-width: 1400px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 
-/* Mobile: Full width images with overlay arrows */
+/* Mobile: Stack arrows below images */
 @media (max-width: 767px) {
   .panorama-controls {
     flex-direction: column;
-    gap: 0;
+    gap: var(--spacing-md);
   }
 }
 
@@ -34,12 +35,13 @@
   .panorama-controls {
     gap: var(--spacing-lg);
     flex-direction: row;
+    flex-wrap: nowrap;
   }
 }
 
 .panorama-arrow {
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--bg-primary);
   border: 1px solid var(--border-color);
   padding: var(--spacing-sm);
   font-size: 1.25rem;
@@ -53,28 +55,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
 }
 
-/* Mobile: Position arrows as overlay */
+/* Mobile: Position arrows in a row below gallery */
 @media (max-width: 767px) {
   .panorama-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    order: 3;
+    /* Place arrows after scroller */
   }
 
-  .panorama-arrow:first-child {
-    right: var(--spacing-md);
-  }
-
-  .panorama-arrow:last-child {
-    left: var(--spacing-md);
+  .panorama-controls {
+    align-items: stretch;
   }
 }
 
 .panorama-arrow:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 1);
+  background: var(--gray-100);
   border-color: var(--gray-300);
   box-shadow: var(--shadow-lg);
 }
@@ -96,8 +92,6 @@
     height: 48px;
     padding: var(--spacing-md);
     font-size: 1.75rem;
-    position: static;
-    transform: none;
   }
 }
 
@@ -124,6 +118,8 @@
     margin-right: calc(-1 * var(--spacing-lg));
     padding-left: 0;
     padding-right: 0;
+    order: 1;
+    /* Display scroller first */
   }
 }
 
