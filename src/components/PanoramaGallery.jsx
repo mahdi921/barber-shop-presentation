@@ -61,7 +61,7 @@ export default function PanoramaGallery() {
         intervalRef.current = setInterval(() => {
             setIndex((prevIndex) => {
                 const nextIndex = (prevIndex + 1) % images.length;
-                scrollToIndex(nextIndex);
+                scrollToIndex(nextIndex, true); // Auto-scroll (don't move page)
                 return nextIndex;
             });
         }, 4000);
@@ -89,14 +89,23 @@ export default function PanoramaGallery() {
         return () => window.removeEventListener("keydown", onKey);
     }, [index]);
 
-    const scrollToIndex = (i) => {
+    const scrollToIndex = (i, isAutoScroll = false) => {
         const scroller = scrollerRef.current;
         if (!scroller) return;
         const child = scroller.children[i];
         if (!child) return;
-        child.scrollIntoView({ behavior: "smooth", inline: "center" });
-        setIndex(i);
-        child.querySelector("img")?.focus();
+
+        if (isAutoScroll) {
+            // For auto-scroll: only scroll the gallery container, not the page
+            const scrollLeft = child.offsetLeft - scroller.offsetLeft;
+            scroller.scrollTo({ left: scrollLeft, behavior: "smooth" });
+            setIndex(i);
+        } else {
+            // For manual scroll: use scrollIntoView
+            child.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            setIndex(i);
+            child.querySelector("img")?.focus();
+        }
     };
 
     const move = (dir) => {
@@ -104,7 +113,7 @@ export default function PanoramaGallery() {
         let next = index + dir;
         if (next < 0) next = 0;
         if (next >= images.length) next = images.length - 1;
-        scrollToIndex(next);
+        scrollToIndex(next, false); // Manual scroll
     };
 
     const handleMouseEnter = () => setIsPaused(true);
@@ -142,7 +151,7 @@ export default function PanoramaGallery() {
                                     className="panorama-item"
                                     key={img.src}
                                     role="listitem"
-                                    onClick={() => scrollToIndex(i)}
+                                    onClick={() => scrollToIndex(i, false)} // Manual click
                                 >
                                     <img
                                         src={img.src}
