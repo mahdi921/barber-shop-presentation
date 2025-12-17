@@ -83,11 +83,11 @@ const Navbar = () => {
                         <button
                             className="navbar__theme-toggle"
                             onClick={handleReturnToDefault}
-                            aria-label="بازگشت به نسخه عمومی"
-                            title="بازگشت به نسخه عمومی"
+                            aria-label="بازگشت"
+                            title="بازگشت"
                         >
                             <ArrowRight size={18} />
-                            <span className="navbar__theme-toggle-text">بازگشت به نسخه عمومی</span>
+                            <span className="navbar__theme-toggle-text">بازگشت</span>
                         </button>
                     )}
 
