@@ -125,7 +125,7 @@ const Navbar = () => {
                                         onClick={handleReturnToDefault}
                                     >
                                         <ArrowRight size={18} />
-                                        <span>بازگشت به نسخه عمومی</span>
+                                        <span>بازگشت</span>
                                     </button>
                                 </li>
                             )}
