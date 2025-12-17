@@ -111,8 +111,8 @@
 }
 
 .navbar__link--active {
-    color: var(--primary);
-    background-color: var(--primary-lighter)/10;
+    color: var(--accent);
+    background-color: var(--accent-lighter);
 }
 
 .navbar__link--active::after {
@@ -122,7 +122,7 @@
     right: var(--spacing-md);
     left: var(--spacing-md);
     height: 2px;
-    background-color: var(--primary);
+    background-color: var(--accent);
     border-radius: var(--radius-full);
 }
 
@@ -130,14 +130,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     color: var(--text-primary);
-    background-color: transparent;
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     transition: all 0.2s ease;
+    cursor: pointer;
+    z-index: 1001;
 }
 
 .navbar__toggle:hover {
@@ -154,7 +156,7 @@
 /* Mobile Menu */
 .navbar__mobile {
     position: fixed;
-    top: 73px;
+    top: 0;
     right: 0;
     left: 0;
     bottom: 0;
@@ -163,8 +165,9 @@
     -webkit-backdrop-filter: blur(12px);
     animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
-    z-index: 999;
-    /* Ensure menu appears above content */
+    z-index: 1000;
+    padding-top: 80px;
+    /* Space for navbar */
 }
 
 @keyframes slideDown {
@@ -182,6 +185,7 @@
 .navbar__mobile-links {
     list-style: none;
     padding: var(--spacing-xl);
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);

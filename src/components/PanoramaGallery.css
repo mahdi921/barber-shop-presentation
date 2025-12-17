@@ -16,22 +16,33 @@
 .panorama-controls {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-sm);
   max-width: 1400px;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .panorama-controls {
+    gap: var(--spacing-lg);
+  }
 }
 
 .panorama-arrow {
   flex-shrink: 0;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: 1.75rem;
+  padding: var(--spacing-sm);
+  font-size: 1.25rem;
   cursor: pointer;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   color: var(--text-primary);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-sm);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .panorama-arrow:hover:not(:disabled) {
@@ -48,6 +59,16 @@
 .panorama-arrow:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* Larger arrows on desktop */
+@media (min-width: 768px) {
+  .panorama-arrow {
+    width: 48px;
+    height: 48px;
+    padding: var(--spacing-md);
+    font-size: 1.75rem;
+  }
 }
 
 .panorama-scroller {
