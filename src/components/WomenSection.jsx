@@ -1,13 +1,23 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 import './WomenSection.css';
-import { ExternalLink, Scissors, Sparkles, Heart } from 'lucide-react';
+import { Scissors, Sparkles, Heart } from 'lucide-react';
 
 export default function WomenSection() {
+    const { toggleToWomen } = useTheme();
+
     const categories = [
         { icon: <Scissors size={24} />, label: 'مدل مو' },
         { icon: <Sparkles size={24} />, label: 'ناخن' },
         { icon: <Heart size={24} />, label: 'آرایش' }
     ];
+
+    const handleWomenTheme = (e) => {
+        e.preventDefault();
+        toggleToWomen();
+        // Smooth scroll to top to show the theme change
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <section id="women" className="women-section">
@@ -27,16 +37,14 @@ export default function WomenSection() {
                         ))}
                     </div>
 
-                    <a
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <button
+                        onClick={handleWomenTheme}
                         className="women-cta"
-                        aria-label="ورود به سایت بانوان"
+                        aria-label="ورود به نسخه بانوان سایت"
                     >
                         <span>ورود به سایت بانوان</span>
-                        <ExternalLink size={20} />
-                    </a>
+                        <Sparkles size={20} />
+                    </button>
                 </div>
             </div>
         </section>

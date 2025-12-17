@@ -1,0 +1,91 @@
+/* Theme CSS Variables */
+
+/* Default Theme */
+:root,
+:root[data-theme="default"] {
+    /* Colors */
+    --bg: #ffffff;
+    --bg-gradient: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+    --surface: #ffffff;
+    --text: #111827;
+    --text-secondary: #4b5563;
+    --text-tertiary: #6b7280;
+    --muted: #9ca3af;
+
+    /* Accent */
+    --accent: #1e40af;
+    --accent-dark: #1e3a8a;
+    --accent-light: #3b82f6;
+    --accent-lighter: #93c5fd;
+    --accent-contrast: #ffffff;
+
+    /* Borders & Shadows */
+    --border-color: #e5e7eb;
+    --border-color-light: #f3f4f6;
+    --card-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+    --card-shadow-hover: 0 12px 32px rgba(16, 24, 40, 0.1);
+
+    /* Section Backgrounds */
+    --section-bg-1: #f9fafb;
+    --section-bg-2: #ffffff;
+    --section-bg-women: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    --section-bg-gift: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+}
+
+/* Women Theme */
+:root[data-theme="women"] {
+    /* Colors - Feminine Palette */
+    --bg: #fff;
+    --bg-gradient: linear-gradient(180deg, #fff7fb 0%, #ffffff 100%);
+    --surface: #ffffff;
+    --text: #1f2937;
+    --text-secondary: #6b6b7a;
+    --text-tertiary: #8b8b9a;
+    --muted: #a8a8b8;
+
+    /* Accent - Plum/Purple */
+    --accent: #9b5de5;
+    --accent-dark: #7c3aed;
+    --accent-light: #c084fc;
+    --accent-lighter: #e9d5ff;
+    --accent-contrast: #ffffff;
+
+    /* Borders & Shadows */
+    --border-color: #f9d5e5;
+    --border-color-light: #fdeef5;
+    --card-shadow: 0 10px 30px rgba(155, 93, 229, 0.08);
+    --card-shadow-hover: 0 15px 40px rgba(155, 93, 229, 0.15);
+
+    /* Section Backgrounds - Softer, Warmer */
+    --section-bg-1: linear-gradient(180deg, #fff7fb 0%, #fef3f9 100%);
+    --section-bg-2: #ffffff;
+    --section-bg-women: linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%);
+    --section-bg-gift: linear-gradient(135deg, #ede9fe 0%, #e9d5ff 50%, #ddd6fe 100%);
+}
+
+/* Apply theme variables to common elements */
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body {
+        transition: none;
+    }
+}
+
+/* Optional: Add subtle pattern for women theme */
+:root[data-theme="women"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(155, 93, 229, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}

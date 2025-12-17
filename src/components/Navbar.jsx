@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
+    const { theme, toggleToDefault } = useTheme();
 
     const navLinks = [
         { href: '#hero', label: 'صفحه اصلی' },
@@ -44,8 +46,11 @@ const Navbar = () => {
         }
     };
 
-    const handleCTAClick = (e) => {
-        handleNavClick(e, 'contact');
+    const handleReturnToDefault = (e) => {
+        e.preventDefault();
+        toggleToDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setIsOpen(false);
     };
 
     return (
@@ -72,6 +77,19 @@ const Navbar = () => {
                             </li>
                         ))}
                     </ul>
+
+                    {/* Return to Default Theme Button (visible only in women theme) */}
+                    {theme === 'women' && (
+                        <button
+                            className="navbar__theme-toggle"
+                            onClick={handleReturnToDefault}
+                            aria-label="بازگشت به نسخه عمومی"
+                            title="بازگشت به نسخه عمومی"
+                        >
+                            <ArrowRight size={18} />
+                            <span className="navbar__theme-toggle-text">بازگشت به نسخه عمومی</span>
+                        </button>
+                    )}
 
                     {/* Mobile Menu Button */}
                     <button
@@ -100,6 +118,17 @@ const Navbar = () => {
                                     </a>
                                 </li>
                             ))}
+                            {theme === 'women' && (
+                                <li>
+                                    <button
+                                        className="navbar__mobile-theme-toggle"
+                                        onClick={handleReturnToDefault}
+                                    >
+                                        <ArrowRight size={18} />
+                                        <span>بازگشت به نسخه عمومی</span>
+                                    </button>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 )}

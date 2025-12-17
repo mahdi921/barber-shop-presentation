@@ -1,13 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import "./PanoramaGallery.css";
 
-const IMAGES = [
-    { src: "/src/assets/panorama-1.jpg", alt: "مدل ۱", caption: "مدل ۱ — توضیح کوتاه" },
-    { src: "/src/assets/panorama-2.jpg", alt: "مدل ۲", caption: "مدل ۲ — توضیح کوتاه" },
-    { src: "/src/assets/panorama-3.jpg", alt: "مدل ۳", caption: "مدل ۳ — توضیح کوتاه" },
-];
+const IMAGES_BY_THEME = {
+    default: [
+        { src: "/src/assets/panorama-1.jpg", alt: "مدل مردانه ۱", caption: "مدل ۱ — توضیح کوتاه" },
+        { src: "/src/assets/panorama-2.jpg", alt: "مدل مردانه ۲", caption: "مدل ۲ — توضیح کوتاه" },
+        { src: "/src/assets/panorama-3.jpg", alt: "مدل مردانه ۳", caption: "مدل ۳ — توضیح کوتاه" },
+    ],
+    women: [
+        { src: "/src/assets/women-1.jpg", alt: "مدل بانوان ۱", caption: "مدل بانوان ۱ — توضیح کوتاه" },
+        { src: "/src/assets/women-2.jpg", alt: "مدل بانوان ۲", caption: "مدل بانوان ۲ — توضیح کوتاه" },
+        { src: "/src/assets/women-3.jpg", alt: "مدل بانوان ۳", caption: "مدل بانوان ۳ — توضیح کوتاه" },
+    ],
+};
 
 export default function PanoramaGallery() {
+    const { theme } = useTheme();
+    const images = IMAGES_BY_THEME[theme] || IMAGES_BY_THEME.default;
+
     const scrollerRef = useRef(null);
     const [index, setIndex] = useState(0);
 
@@ -36,12 +47,12 @@ export default function PanoramaGallery() {
     const move = (dir) => {
         let next = index + dir;
         if (next < 0) next = 0;
-        if (next >= IMAGES.length) next = IMAGES.length - 1;
+        if (next >= images.length) next = images.length - 1;
         scrollToIndex(next);
     };
 
     return (
-        <section id="hero" className="panorama-section" aria-label="نمونه مدل‌ها">
+        <section id="hero" className="panorama-section" aria-label="نمایش مدل‌ها">
             <div className="container">
                 <h2 className="panorama-title">پیش‌نمایش مدل مو و ریش با هوش مصنوعی</h2>
 
@@ -62,7 +73,7 @@ export default function PanoramaGallery() {
                         tabIndex={0}
                         aria-label="گالری پانوراما"
                     >
-                        {IMAGES.map((img, i) => (
+                        {images.map((img, i) => (
                             <figure
                                 className="panorama-item"
                                 key={img.src}
@@ -84,13 +95,12 @@ export default function PanoramaGallery() {
                     <button
                         aria-label="تصویر بعدی"
                         onClick={() => move(1)}
-                        disabled={index === IMAGES.length - 1}
+                        disabled={index === images.length - 1}
                         className="panorama-arrow"
                     >
                         ›
                     </button>
                 </div>
-
             </div>
         </section>
     );
