@@ -19,7 +19,7 @@ export default function SystemOverview() {
     return (
         <section id="system" className="system-section">
             <div className="container">
-                <h2 className="system-title">پلتفرم هوشمند نمایش قبل و بعد</h2>
+                <h2 className="system-title">پیش‌نمایش هوشمند مدل مو و ریش روی تصویر کاربر با فناوری هوش مصنوعی</h2>
 
                 <div className="system-content">
                     <p className="system-description">
