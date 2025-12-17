@@ -107,9 +107,11 @@
 .panorama-img {
   width: 100%;
   height: 400px;
-  object-fit: cover;
+  object-fit: contain;
+  /* Show full image without cropping on mobile */
+  background: var(--gray-50);
+  /* Background for letterboxing */
   outline: none;
-  background: var(--gray-100);
 }
 
 .panorama-caption {
@@ -140,6 +142,8 @@
 @media (min-width: 768px) {
   .panorama-img {
     height: 450px;
+    object-fit: cover;
+    /* Use cover on tablet and up */
   }
 }
 
