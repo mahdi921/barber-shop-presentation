@@ -91,15 +91,6 @@ export default function PanoramaGallery() {
                     </button>
                 </div>
 
-                <div className="panorama-actions">
-                    <button
-                        type="button"
-                        className="btn-outline"
-                        onClick={() => scrollToIndex(0)}
-                    >
-                        مشاهده تمام تصاویر
-                    </button>
-                </div>
             </div>
         </section>
     );

@@ -19,11 +19,11 @@ export default function SystemOverview() {
     return (
         <section id="system" className="system-section">
             <div className="container">
-                <h2 className="system-title">راه‌اندازی سیستم</h2>
+                <h2 className="system-title">پلتفرم هوشمند نمایش قبل و بعد</h2>
 
                 <div className="system-content">
                     <p className="system-description">
-                        این سیستم در پیرایشگاه شما قابل اجرا است — در صورت تمایل برای راه‌اندازی و دریافت مشاوره با ما تماس بگیرید.
+                        با نصب این سیستم در پیرایشگاه، مشتریان شما می‌توانند پیش از اقدام، نتیجه نهایی کار خود را با کمک هوش مصنوعی مشاهده کنند. برای دریافت مشاوره و راه‌اندازی، همین حالا با ما تماس بگیرید.
                     </p>
 
                     <ul className="system-benefits">

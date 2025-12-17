@@ -1,7 +1,7 @@
-/* System Overview Styles */
+/* Modern SaaS System Overview */
 .system-section {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    padding: var(--spacing-4xl) 0;
+    background: var(--bg-primary);
 }
 
 .system-content {
@@ -11,18 +11,19 @@
 }
 
 .system-title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
     font-weight: 700;
-    color: var(--text-primary, #1a202c);
-    margin-bottom: 2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xl);
     text-align: center;
+    letter-spacing: -0.01em;
 }
 
 .system-description {
-    font-size: 1.25rem;
+    font-size: 1.1875rem;
     line-height: 1.8;
-    color: var(--text-secondary, #4a5568);
-    margin-bottom: 3rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-3xl);
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -31,69 +32,70 @@
 .system-benefits {
     list-style: none;
     padding: 0;
-    margin: 0 0 3rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    margin: 0 0 var(--spacing-3xl);
+    display: grid;
+    gap: var(--spacing-lg);
 }
 
 .benefit-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: right;
 }
 
 .benefit-item:hover {
-    transform: translateX(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-lighter);
+    box-shadow: var(--shadow-md);
+    transform: translateX(-2px);
 }
 
 .benefit-icon {
     flex-shrink: 0;
-    color: var(--primary, #2b6cb0);
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--primary-light, #bee3f8);
-    padding: 0.75rem;
-    border-radius: 10px;
+    background: var(--primary-lighter)/10;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
 }
 
 .benefit-text {
     font-size: 1.0625rem;
     font-weight: 500;
-    color: var(--text-primary, #1a202c);
+    color: var(--text-primary);
     flex: 1;
 }
 
 .system-cta {
     display: inline-block;
-    padding: 1.125rem 3rem;
-    background: var(--primary, #2b6cb0);
+    padding: 1.125rem 2.5rem;
+    background: var(--primary);
     color: white;
-    font-weight: 700;
-    font-size: 1.125rem;
+    font-weight: 600;
+    font-size: 1.0625rem;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-md);
 }
 
 .system-cta:hover {
-    background: var(--primary-dark, #1e4e8c);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(43, 108, 176, 0.4);
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
 }
 
 .system-cta:focus-visible {
-    outline: 3px solid var(--primary-light, #63b3ed);
+    outline: 2px solid var(--primary-light);
     outline-offset: 2px;
 }
 

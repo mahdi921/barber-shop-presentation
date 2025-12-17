@@ -1,38 +1,49 @@
-/* Women Section Styles */
+/* Modern SaaS Women Section */
 .women-section {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #fff5f7 0%, #ffe0eb 100%);
+    padding: var(--spacing-4xl) 0;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    position: relative;
+}
+
+.women-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .women-content {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .women-title {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.875rem, 4vw, 3rem);
     font-weight: 700;
-    color: var(--text-primary, #1a202c);
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #d53f8c 0%, #ed64a6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -0.01em;
 }
 
 .women-intro {
     font-size: 1.125rem;
     line-height: 1.8;
-    color: var(--text-secondary, #4a5568);
-    margin-bottom: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-3xl);
 }
 
 .women-categories {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-3xl);
     flex-wrap: wrap;
 }
 
@@ -40,23 +51,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1.5rem;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(213, 63, 140, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(236, 72, 153, 0.1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     min-width: 120px;
 }
 
 .category-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(213, 63, 140, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(236, 72, 153, 0.2);
 }
 
 .category-icon {
-    color: #d53f8c;
+    color: #ec4899;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,32 +77,32 @@
 
 .category-label {
     font-weight: 600;
-    color: var(--text-primary, #1a202c);
+    color: var(--text-primary);
     font-size: 1rem;
 }
 
 .women-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #d53f8c 0%, #ed64a6 100%);
+    gap: var(--spacing-sm);
+    padding: 1.125rem 2.5rem;
+    background: linear-gradient(135deg, #db2777 0%, #ec4899 100%);
     color: white;
-    font-weight: 700;
-    font-size: 1.125rem;
-    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    border-radius: var(--radius-lg);
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(213, 63, 140, 0.3);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-md);
 }
 
 .women-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(213, 63, 140, 0.4);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
 }
 
 .women-cta:focus-visible {
-    outline: 3px solid #f687b3;
+    outline: 2px solid #f9a8d4;
     outline-offset: 2px;
 }
 
@@ -110,12 +123,12 @@
 /* Responsive adjustments */
 @media (max-width: 640px) {
     .women-categories {
-        gap: 1rem;
+        gap: var(--spacing-md);
     }
 
     .category-item {
         min-width: 100px;
-        padding: 1rem;
+        padding: var(--spacing-lg);
     }
 
     .women-cta {

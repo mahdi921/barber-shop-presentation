@@ -8,8 +8,9 @@ const Navbar = () => {
 
     const navLinks = [
         { href: '#hero', label: 'صفحه اصلی' },
+        { href: '#system', label: 'پلتفرم هوشمند' },
         { href: '#women', label: 'بخش بانوان' },
-        { href: '#system', label: 'راه‌اندازی' },
+        { href: '#gift', label: 'اشانتیون' },
         { href: '#contact', label: 'تماس با ما' },
     ];
 
@@ -72,15 +73,6 @@ const Navbar = () => {
                         ))}
                     </ul>
 
-                    <a
-                        href="#contact"
-                        className="navbar__cta" // Assuming 'nav-cta' should be 'navbar__cta' for consistency
-                        onClick={handleCTAClick} // Keep onClick for smooth scroll behavior
-                        aria-label="تماس با ما"
-                    >
-                        تماس / درخواست دمو
-                    </a>
-
                     {/* Mobile Menu Button */}
                     <button
                         className="navbar__toggle"
@@ -108,14 +100,6 @@ const Navbar = () => {
                                     </a>
                                 </li>
                             ))}
-                            <li>
-                                <button
-                                    className="navbar__mobile-cta"
-                                    onClick={handleCTAClick}
-                                >
-                                    تماس / درخواست دمو
-                                </button>
-                            </li>
                         </ul>
                     </div>
                 )}

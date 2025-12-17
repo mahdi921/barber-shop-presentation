@@ -1,44 +1,43 @@
-/* Panorama Gallery Styles */
+/* Modern SaaS Panorama Gallery */
 .panorama-section {
-  direction: rtl;
-  padding: 3rem 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+  background: linear-gradient(180deg, var(--gray-50) 0%, var(--bg-primary) 100%);
 }
 
 .panorama-title {
   text-align: center;
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.875rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--text-primary, #1a202c);
-  margin-bottom: 2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-3xl);
+  letter-spacing: -0.01em;
 }
 
 .panorama-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--spacing-lg);
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .panorama-arrow {
   flex-shrink: 0;
-  background: var(--bg-surface, #fff);
-  border: 2px solid var(--border-color, #e2e8f0);
-  padding: 1rem 1.25rem;
-  font-size: 2rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1.75rem;
   cursor: pointer;
-  border-radius: 12px;
-  color: var(--primary, #2b6cb0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
 }
 
 .panorama-arrow:hover:not(:disabled) {
-  background: var(--primary, #2b6cb0);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+  background: var(--gray-100);
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-md);
 }
 
 .panorama-arrow:disabled {
@@ -47,7 +46,7 @@
 }
 
 .panorama-arrow:focus-visible {
-  outline: 3px solid var(--primary-light, #63b3ed);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
@@ -55,31 +54,30 @@
   overflow-x: auto;
   overflow-y: hidden;
   display: flex;
-  gap: 1.5rem;
+  gap: var(--spacing-lg);
   scroll-snap-type: x mandatory;
-  padding: 1rem 0;
+  padding: var(--spacing-sm) 0 var(--spacing-md);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary, #2b6cb0) var(--bg-muted, #f7fafc);
+  scrollbar-color: var(--gray-300) transparent;
   flex: 1;
 }
 
 .panorama-scroller::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 
 .panorama-scroller::-webkit-scrollbar-track {
-  background: var(--bg-muted, #f7fafc);
-  border-radius: 4px;
+  background: transparent;
 }
 
 .panorama-scroller::-webkit-scrollbar-thumb {
-  background: var(--primary, #2b6cb0);
-  border-radius: 4px;
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
 }
 
 .panorama-scroller::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark, #1e4e8c);
+  background: var(--gray-400);
 }
 
 .panorama-item {
@@ -88,20 +86,21 @@
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  background: var(--bg-surface, #fff);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: var(--bg-primary);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border-color-light);
 }
 
 .panorama-item:hover {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-xl);
 }
 
 .panorama-item:focus-within {
-  outline: 3px solid var(--primary-light, #63b3ed);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
@@ -109,47 +108,17 @@
   width: 100%;
   height: 400px;
   object-fit: cover;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
   outline: none;
-  background: var(--bg-muted, #f7fafc);
+  background: var(--gray-100);
 }
 
 .panorama-caption {
-  padding: 1.25rem;
+  padding: var(--spacing-lg) var(--spacing-xl);
   text-align: right;
-  font-size: 1.05rem;
+  font-size: 1.0625rem;
   font-weight: 500;
-  color: var(--text-secondary, #4a5568);
-}
-
-.panorama-actions {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.btn-outline {
-  border: 2px solid var(--primary, #2b6cb0);
-  padding: 0.875rem 2rem;
-  border-radius: 12px;
-  background: transparent;
-  color: var(--primary, #2b6cb0);
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-outline:hover {
-  background: var(--primary, #2b6cb0);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
-}
-
-.btn-outline:focus-visible {
-  outline: 3px solid var(--primary-light, #63b3ed);
-  outline-offset: 2px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
 }
 
 /* Reduced motion support */
@@ -157,14 +126,12 @@
 
   .panorama-scroller,
   .panorama-item,
-  .panorama-arrow,
-  .btn-outline {
+  .panorama-arrow {
     transition: none;
     scroll-behavior: auto;
   }
 
-  .panorama-arrow:hover:not(:disabled),
-  .btn-outline:hover {
+  .panorama-arrow:hover:not(:disabled) {
     transform: none;
   }
 }
@@ -182,6 +149,6 @@
   }
 
   .panorama-section {
-    padding: 4rem 0;
+    padding: var(--spacing-4xl) 0;
   }
 }
