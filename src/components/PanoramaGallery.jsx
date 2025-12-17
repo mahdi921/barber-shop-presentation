@@ -2,16 +2,24 @@ import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import "./PanoramaGallery.css";
 
+// Import images - Vite will handle these correctly
+import panorama1 from '../assets/panorama-1.jpg';
+import panorama2 from '../assets/panorama-2.jpg';
+import panorama3 from '../assets/panorama-3.jpg';
+import women1 from '../assets/women-1.jpg';
+import women2 from '../assets/women-2.jpg';
+import women3 from '../assets/women-3.jpg';
+
 const IMAGES_BY_THEME = {
     default: [
-        { src: "/src/assets/panorama-1.jpg", alt: "مدل مردانه ۱", caption: "مدل ۱ — توضیح کوتاه" },
-        { src: "/src/assets/panorama-2.jpg", alt: "مدل مردانه ۲", caption: "مدل ۲ — توضیح کوتاه" },
-        { src: "/src/assets/panorama-3.jpg", alt: "مدل مردانه ۳", caption: "مدل ۳ — توضیح کوتاه" },
+        { src: panorama1, alt: "مدل مردانه ۱", caption: "مدل ۱ — توضیح کوتاه" },
+        { src: panorama2, alt: "مدل مردانه ۲", caption: "مدل ۲ — توضیح کوتاه" },
+        { src: panorama3, alt: "مدل مردانه ۳", caption: "مدل ۳ — توضیح کوتاه" },
     ],
     women: [
-        { src: "/src/assets/women-1.jpg", alt: "مدل بانوان ۱", caption: "مدل بانوان ۱ — توضیح کوتاه" },
-        { src: "/src/assets/women-2.jpg", alt: "مدل بانوان ۲", caption: "مدل بانوان ۲ — توضیح کوتاه" },
-        { src: "/src/assets/women-3.jpg", alt: "مدل بانوان ۳", caption: "مدل بانوان ۳ — توضیح کوتاه" },
+        { src: women1, alt: "مدل بانوان ۱", caption: "مدل بانوان ۱ — توضیح کوتاه" },
+        { src: women2, alt: "مدل بانوان ۲", caption: "مدل بانوان ۲ — توضیح کوتاه" },
+        { src: women3, alt: "مدل بانوان ۳", caption: "مدل بانوان ۳ — توضیح کوتاه" },
     ],
 };
 
@@ -22,10 +30,23 @@ export default function PanoramaGallery() {
     const scrollerRef = useRef(null);
     const [index, setIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [imagesLoaded, setImagesLoaded] = useState(false);
     const intervalRef = useRef(null);
+
+    // Defer image loading until after page load
+    useEffect(() => {
+        // Wait for page to fully load before showing images
+        const timer = setTimeout(() => {
+            setImagesLoaded(true);
+        }, 100); // Small delay to let page render first
+
+        return () => clearTimeout(timer);
+    }, []);
 
     // Auto-scroll functionality
     useEffect(() => {
+        if (!imagesLoaded) return; // Don't start auto-scroll until images are ready
+
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (prefersReducedMotion || isPaused) {
@@ -50,7 +71,7 @@ export default function PanoramaGallery() {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [isPaused, images.length]);
+    }, [isPaused, images.length, imagesLoaded]);
 
     // Keyboard navigation
     useEffect(() => {
@@ -115,23 +136,30 @@ export default function PanoramaGallery() {
                         tabIndex={0}
                         aria-label="گالری پانوراما"
                     >
-                        {images.map((img, i) => (
-                            <figure
-                                className="panorama-item"
-                                key={img.src}
-                                role="listitem"
-                                onClick={() => scrollToIndex(i)}
-                            >
-                                <img
-                                    src={img.src}
-                                    alt={img.alt}
-                                    loading="lazy"
-                                    tabIndex={-1}
-                                    className="panorama-img"
-                                />
-                                <figcaption className="panorama-caption">{img.caption}</figcaption>
-                            </figure>
-                        ))}
+                        {imagesLoaded ? (
+                            images.map((img, i) => (
+                                <figure
+                                    className="panorama-item"
+                                    key={img.src}
+                                    role="listitem"
+                                    onClick={() => scrollToIndex(i)}
+                                >
+                                    <img
+                                        src={img.src}
+                                        alt={img.alt}
+                                        loading="lazy"
+                                        tabIndex={-1}
+                                        className="panorama-img"
+                                    />
+                                    <figcaption className="panorama-caption">{img.caption}</figcaption>
+                                </figure>
+                            ))
+                        ) : (
+                            // Placeholder while images load
+                            <div className="panorama-loader">
+                                <div className="spinner"></div>
+                            </div>
+                        )}
                     </div>
 
                     <button
