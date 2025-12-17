@@ -4,7 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
     const { theme, toggleToDefault } = useTheme();
 
@@ -18,7 +18,6 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            // Extract IDs from hrefs for scroll tracking
             const sectionIds = navLinks.map(link => link.href.substring(1));
             const sections = sectionIds.map(id => document.getElementById(id));
             const scrollPosition = window.scrollY + 100;
@@ -38,11 +37,11 @@ const Navbar = () => {
 
     const handleNavClick = (e, href) => {
         e.preventDefault();
-        const id = href.substring(1); // Remove # from href
+        const id = href.substring(1);
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
-            setIsOpen(false);
+            setIsMenuOpen(false);
         }
     };
 
@@ -50,27 +49,27 @@ const Navbar = () => {
         e.preventDefault();
         toggleToDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setIsOpen(false);
+        setIsMenuOpen(false);
     };
 
     return (
-        <nav className="navbar" role="navigation" aria-label="منوی اصلی">
+        <nav className="navbar">
             <div className="container">
-                <div className="navbar__wrapper">
-                    <div className="navbar__brand">
-                        <span className="navbar__logo">✂️</span>
-                        <span className="navbar__title">استایلیو</span>
+                <div className="navbar-wrapper">
+                    {/* Brand */}
+                    <div className="navbar-brand">
+                        <span className="navbar-logo">✂️</span>
+                        <span className="navbar-title">استایلیو</span>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <ul className="navbar__links">
+                    {/* Desktop Links */}
+                    <ul className="navbar-links">
                         {navLinks.map(link => (
                             <li key={link.href}>
                                 <a
                                     href={link.href}
-                                    className={`navbar__link ${activeSection === link.href.substring(1) ? 'navbar__link--active' : ''}`}
+                                    className={`navbar-link ${activeSection === link.href.substring(1) ? 'navbar-link-active' : ''}`}
                                     onClick={(e) => handleNavClick(e, link.href)}
-                                    aria-current={activeSection === link.href.substring(1) ? 'page' : undefined}
                                 >
                                     {link.label}
                                 </a>
@@ -78,41 +77,39 @@ const Navbar = () => {
                         ))}
                     </ul>
 
-                    {/* Return to Default Theme Button (visible only in women theme) */}
+                    {/* Theme Toggle (Desktop) */}
                     {theme === 'women' && (
                         <button
-                            className="navbar__theme-toggle"
+                            className="navbar-theme-btn"
                             onClick={handleReturnToDefault}
                             aria-label="بازگشت"
-                            title="بازگشت"
                         >
                             <ArrowRight size={18} />
-                            <span className="navbar__theme-toggle-text">بازگشت</span>
+                            <span>بازگشت</span>
                         </button>
                     )}
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Toggle */}
                     <button
-                        className="navbar__toggle"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-expanded={isOpen}
-                        aria-label="منوی موبایل"
+                        className="navbar-toggle"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label="منو"
+                        aria-expanded={isMenuOpen}
                     >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
 
-                {/* Mobile Navigation */}
-                {isOpen && (
-                    <div className="navbar__mobile" role="dialog" aria-modal="true">
-                        <ul className="navbar__mobile-links">
+                {/* Mobile Menu */}
+                {isMenuOpen && (
+                    <div className="navbar-mobile">
+                        <ul className="navbar-mobile-list">
                             {navLinks.map(link => (
                                 <li key={link.href}>
                                     <a
                                         href={link.href}
-                                        className={`navbar__mobile-link ${activeSection === link.href.substring(1) ? 'navbar__mobile-link--active' : ''}`}
+                                        className={`navbar-mobile-link ${activeSection === link.href.substring(1) ? 'navbar-mobile-link-active' : ''}`}
                                         onClick={(e) => handleNavClick(e, link.href)}
-                                        aria-current={activeSection === link.href.substring(1) ? 'page' : undefined}
                                     >
                                         {link.label}
                                     </a>
@@ -121,7 +118,7 @@ const Navbar = () => {
                             {theme === 'women' && (
                                 <li>
                                     <button
-                                        className="navbar__mobile-theme-toggle"
+                                        className="navbar-mobile-theme-btn"
                                         onClick={handleReturnToDefault}
                                     >
                                         <ArrowRight size={18} />
